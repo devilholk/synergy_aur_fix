@@ -52,13 +52,13 @@ index 1f78ae0..b62f30c 100644
 -    
 -add_library(gtest STATIC ../../ext/gtest/src/gtest-all.cc)
 -add_library(gmock STATIC ../../ext/gmock/src/gmock-all.cc)
-+    /usr/src/gtest
++    /usr/src/googletest
 +    /usr/include/gtest
 +    /usr/src/gmock
 +    /usr/include/gmock)
 +
-+add_library(gtest STATIC /usr/src/gtest/src/gtest-all.cc)
-+add_library(gmock STATIC /usr/src/gmock/gmock-all.cc)
++add_library(gtest STATIC /usr/src/googletest/src/gtest-all.cc)
++add_library(gmock STATIC /usr/src/gmock/src/gmock-all.cc)
  
  if (UNIX)
      # ignore warnings in gtest and gmock

@@ -27,18 +27,20 @@ source=(synergy-${pkgver}.tar.gz::https://github.com/symless/synergy-core/archiv
         enable-test-build.patch
         fix-test-build.patch
         synergys.socket
-        synergys.service)
+        synergys.service
+        0001-Added-missing-XAtom-for-text-plain-charset-utf-8.patch)
 sha512sums=('01497fe362395dd9d26d44f7468ca5c01ee7cd2f590b6c28a67e094f969fdca3b8f78570cca4f188c16fc2575ca895daf8d6ffd07378964ed01da1540db05c8e'
-            '6ed5384ec46e991958f48051c66b87febfb457a748cea48909f87a088c804907f480f123620a0a5921e281ca9871e251de8b7dd5803ffe8566841f68f396c160'
+            'eaa6416a5d25b94d0a61e3b4784720591984201e14895dd973de182ede096ad44ecc1f0b2762038249430f291e63275c5ac76ef0e194e41c2ba1c479b0075130'
             'b8347b803a7baaeeab75e55778314298fc69e15ccda154a8622b4697c3a3e7d6ba51cb156f06c6b289c41cb0892be7fed5ce49591531ed1ef18fa3a1ec8a7d6d'
             '89b29994f238013393b90ad628d781ea6ea1d46c33819be561f031cc0790ef7f3860faaa2803e1459ed3c14affb749ea3bab6b15598c760424c8063195cb56a6'
             '158d218faa8d8c33cbea935a9dcad4bcf79309eb485bfea107cd160f894d1090db6fea6e60827509b985ff9a7493020fc819e5e150bdac85f5547e755f3ad9ec'
             'f9c124533dfd0bbbb1b5036b7f4b06f7f86f69165e88b9146ff17798377119eb9f1a4666f3b2ee9840bc436558d715cdbfe2fdfd7624348fae64871f785a1a62'
-            '9663a11b915e10e60317e732a4d1191e8f8ff19176994c27dd20aa445daab7565bd624e5575c9c639d144293879fbe8376834a076723f778fd322ebd1c9f2029')
+            '9663a11b915e10e60317e732a4d1191e8f8ff19176994c27dd20aa445daab7565bd624e5575c9c639d144293879fbe8376834a076723f778fd322ebd1c9f2029'
+            'aaa063f2954086d7536b9639e8e63d44018a2e786b3dbfd92647acb97856e0c4cebfa501e5b8cf544c5aa76d385395ccf53cd05724046969f2f5c0fa91aea711')
 
 prepare() {
   cd synergy-core-${pkgver}-stable
-  mkdir build
+  mkdir -p build
 
   # get rid of shitty bundled gtest and gmock
   patch -Np1 < "${srcdir}/use-system-libs.patch"
@@ -51,6 +53,7 @@ prepare() {
   # fix building of test executables
   patch -Np1 < "${srcdir}/fix-test-build.patch"
   # remove tests that need working X
+  patch -Np1 < "${srcdir}/0001-Added-missing-XAtom-for-text-plain-charset-utf-8.patch"
   rm src/test/integtests/platform/XWindowsScreenTests.cpp \
     src/test/integtests/platform/XWindowsKeyStateTests.cpp
 }
